@@ -6,9 +6,19 @@
   <title>Интеллект Х</title>
   <style>
     :root{
-      --bg:#000;
-      --star:#f5f8ff;
-      --text:rgba(232,238,248,.92);
+      --bg:#000000;
+
+      /* Основная палитра */
+      --blue-main:#bfe8ff;
+      --blue-strong:#8ddcff;
+      --blue-hot:#dff7ff;
+      --blue-deep:#63caff;
+
+      /* Общая точка привязки для Х / луча / ракеты / портрета */
+      --anchor-x: 118px;
+
+      /* Портрет */
+      --portrait-w: min(15vw, 190px);
     }
 
     *{box-sizing:border-box}
@@ -19,14 +29,14 @@
       height:100%;
       overflow:hidden;
       background:#000;
-      font-family:"Segoe UI",Arial,sans-serif;
+      font-family:"Segoe UI", Arial, sans-serif;
     }
 
     body{
       position:relative;
       background:
-        radial-gradient(circle at 50% 44%, rgba(24,40,72,.10) 0%, rgba(0,0,0,0) 26%),
-        radial-gradient(circle at 50% 58%, rgba(70,110,180,.05) 0%, rgba(0,0,0,0) 17%),
+        radial-gradient(circle at 50% 42%, rgba(20,70,120,.12) 0%, rgba(0,0,0,0) 24%),
+        radial-gradient(circle at 50% 58%, rgba(60,140,255,.05) 0%, rgba(0,0,0,0) 20%),
         #000;
     }
 
@@ -40,9 +50,11 @@
     .star{
       position:absolute;
       border-radius:50%;
-      background:var(--star);
-      opacity:.14;
-      box-shadow:0 0 7px rgba(255,255,255,.22);
+      background:var(--blue-hot);
+      opacity:.18;
+      box-shadow:
+        0 0 6px rgba(180,235,255,.55),
+        0 0 14px rgba(90,190,255,.22);
       pointer-events:none;
       animation:twinkle linear infinite;
       will-change:transform,opacity;
@@ -50,61 +62,72 @@
 
     .formula{
       position:absolute;
-      color:rgba(245,248,255,.28);
+      color:rgba(184,228,255,.34);
       font-family:"Times New Roman", Georgia, serif;
       white-space:nowrap;
       user-select:none;
       pointer-events:none;
       text-shadow:
-        0 0 4px rgba(255,255,255,.04),
-        0 0 10px rgba(180,210,255,.05);
+        0 0 4px rgba(190,235,255,.10),
+        0 0 12px rgba(90,190,255,.10);
       mix-blend-mode:screen;
       animation:twinkle linear infinite;
       will-change:transform,opacity;
     }
 
     @keyframes twinkle{
-      0%,100%{opacity:.08;transform:scale(.96)}
-      50%{opacity:.95;transform:scale(1.05)}
+      0%,100%{
+        opacity:.10;
+        transform:scale(.96);
+      }
+      50%{
+        opacity:.98;
+        transform:scale(1.05);
+      }
     }
 
     .title-wrap{
       position:absolute;
       left:50%;
-      top:28%;
+      top:27%;
       transform:translate(-50%,-50%);
       z-index:20;
       text-align:center;
       pointer-events:none;
+      width:min(92vw, 1280px);
     }
 
     .title{
       font-weight:300;
-      font-size:clamp(34px,4.2vw,78px);
+      font-size:clamp(42px, 6vw, 110px);
       letter-spacing:.08em;
-      color:var(--text);
+      color:rgba(188,231,255,.96);
       text-shadow:
-        0 0 10px rgba(190,215,255,.08),
-        0 0 24px rgba(140,175,255,.06);
+        0 0 10px rgba(180,225,255,.18),
+        0 0 24px rgba(110,190,255,.14),
+        0 0 54px rgba(70,150,255,.08);
       position:relative;
       display:inline-block;
+      white-space:nowrap;
     }
 
     .title .x{
       position:relative;
       display:inline-block;
-      color:#fbfdff;
+      font-weight:700;
+      color:var(--blue-hot);
       text-shadow:
-        0 0 8px rgba(255,255,255,.96),
-        0 0 18px rgba(180,220,255,.82),
-        0 0 38px rgba(110,170,255,.56),
-        0 0 78px rgba(110,170,255,.24);
-      animation:xPulse 2.2s ease-in-out infinite;
+        0 0 8px rgba(220,248,255,1),
+        0 0 18px rgba(170,232,255,.98),
+        0 0 34px rgba(110,205,255,.88),
+        0 0 60px rgba(70,170,255,.65),
+        0 0 92px rgba(70,170,255,.28);
+      animation:xPulse 2s ease-in-out infinite;
     }
 
     @keyframes xPulse{
-      0%,100%{opacity:.9}
-      50%{opacity:1}
+      0%,100%{opacity:.93; transform:scale(1)}
+      50%{opacity:1; transform:scale(1.03)}
     }
 
     .sparkle-layer{
@@ -125,39 +148,43 @@
       mix-blend-mode:screen;
     }
 
+    .spark.line{
+      width:2px;
+      height:18px;
+      border-radius:999px;
+      transform-origin:center;
+    }
+
     @keyframes sparkle{
       0%{
         opacity:0;
-        transform:translate(0,0) scale(.4) rotate(0deg);
+        transform:translate(0,0) scale(.35) rotate(0deg);
       }
-      18%{
-        opacity:1;
-      }
-      55%{
-        opacity:.95;
-      }
+      20%{opacity:1}
+      58%{opacity:.95}
       100%{
         opacity:0;
-        transform:translate(var(--dx),var(--dy)) scale(1.6) rotate(40deg);
+        transform:translate(var(--dx),var(--dy)) scale(1.6) rotate(var(--rot));
       }
     }
 
+    /* Луч теперь привязан к той же точке, что и ракета */
     .x-beam{
       position:absolute;
       left:50%;
       top:calc(100% + 6px);
-      transform:translateX(128px);
-      width:14px;
-      height:300px;
+      transform:translateX(var(--anchor-x));
+      width:16px;
+      height:280px;
       background:
         linear-gradient(to bottom,
-          rgba(235,245,255,.94) 0%,
-          rgba(160,210,255,.48) 12%,
-          rgba(120,180,255,.16) 40%,
-          rgba(70,120,255,.05) 74%,
+          rgba(225,248,255,.96) 0%,
+          rgba(150,225,255,.60) 12%,
+          rgba(95,185,255,.22) 40%,
+          rgba(65,135,255,.07) 74%,
           rgba(0,0,0,0) 100%);
       filter:blur(4px);
-      opacity:.72;
+      opacity:.80;
       z-index:18;
       pointer-events:none;
       animation:beamPulse 2.1s ease-in-out infinite;
@@ -168,37 +195,62 @@
       position:absolute;
       left:50%;
       top:0;
-      width:48px;
+      width:60px;
       height:100%;
       transform:translateX(-50%);
       background:
         linear-gradient(to bottom,
-          rgba(180,220,255,.16),
-          rgba(90,140,255,.05),
+          rgba(175,230,255,.24),
+          rgba(80,160,255,.08),
           rgba(0,0,0,0));
-      filter:blur(16px);
+      filter:blur(18px);
     }
 
     @keyframes beamPulse{
       0%,100%{
-        opacity:.5;
-        transform:translateX(128px) scaleY(.96);
+        opacity:.56;
+        transform:translateX(var(--anchor-x)) scaleY(.96);
       }
       50%{
-        opacity:.88;
-        transform:translateX(128px) scaleY(1.03);
+        opacity:.96;
+        transform:translateX(var(--anchor-x)) scaleY(1.03);
       }
     }
 
-    /* БОЛЬШАЯ ракета под Х */
-    .rocket-stage{
+    /* ГРУППА справа под Х: ракета + портрет */
+    .hero-group{
       position:absolute;
       left:50%;
-      top:calc(28% + 46px);
-      width:min(28vw, 320px);
-      transform:translateX(54px);
+      top:calc(27% + 52px);
+      transform:translateX(calc(var(--anchor-x) - 24px));
       z-index:30;
+      display:flex;
+      align-items:flex-end;
+      gap:min(2vw, 26px);
       pointer-events:none;
+    }
+
+    .master-stage{
+      width:var(--portrait-w);
+      position:relative;
+      z-index:28;
+      opacity:.98;
+    }
+
+    .master-img{
+      display:block;
+      width:100%;
+      height:auto;
+      object-fit:contain;
+      filter:
+        drop-shadow(0 0 10px rgba(160,225,255,.10))
+        drop-shadow(0 0 22px rgba(90,175,255,.08));
+    }
+
+    .rocket-stage{
+      position:relative;
+      width:min(23vw, 280px);
+      z-index:30;
     }
 
     .rocket-wrap{
@@ -215,8 +267,8 @@
       position:relative;
       z-index:5;
       filter:
-        drop-shadow(0 0 10px rgba(255,214,160,.08))
-        drop-shadow(0 0 22px rgba(255,255,255,.04));
+        drop-shadow(0 0 10px rgba(255,214,160,.10))
+        drop-shadow(0 0 22px rgba(220,245,255,.06));
     }
 
     .engine-flame{
@@ -249,7 +301,7 @@
       background:
         linear-gradient(to bottom,
           rgba(255,255,255,.6),
-          rgba(160,220,255,.14),
+          rgba(160,220,255,.16),
           rgba(0,0,0,0));
       filter:blur(14px);
       transform:scale(1.5,1.15);
@@ -257,18 +309,18 @@
     }
 
     @keyframes flameFlicker{
-      0%{transform:translateX(-50%) scaleY(.92) scaleX(.97);opacity:.84}
-      50%{transform:translateX(-50%) scaleY(1.08) scaleX(1.04);opacity:1}
-      100%{transform:translateX(-50%) scaleY(.97) scaleX(.98);opacity:.9}
+      0%{transform:translateX(-50%) scaleY(.92) scaleX(.97); opacity:.84}
+      50%{transform:translateX(-50%) scaleY(1.08) scaleX(1.04); opacity:1}
+      100%{transform:translateX(-50%) scaleY(.97) scaleX(.98); opacity:.9}
     }
 
     .launch-glow{
       position:absolute;
       left:50%;
-      top:calc(28% + 46px + 320px);
-      transform:translateX(54px);
-      width:min(32vw, 340px);
-      height:20vh;
+      top:calc(27% + 52px + 290px);
+      transform:translateX(calc(var(--anchor-x) - 24px + var(--portrait-w) + 8px));
+      width:min(28vw, 320px);
+      height:18vh;
       background:
         radial-gradient(circle at 50% 20%,
           rgba(255,230,180,.18) 0%,
@@ -281,17 +333,17 @@
     }
 
     @keyframes launchPulse{
-      0%,100%{opacity:.58;transform:translateX(54px) scale(.98)}
-      50%{opacity:1;transform:translateX(54px) scale(1.05)}
+      0%,100%{opacity:.58; transform:translateX(calc(var(--anchor-x) - 24px + var(--portrait-w) + 8px)) scale(.98)}
+      50%{opacity:1; transform:translateX(calc(var(--anchor-x) - 24px + var(--portrait-w) + 8px)) scale(1.05)}
     }
 
     .exhaust-field{
       position:absolute;
       left:50%;
-      top:calc(28% + 46px + 250px);
-      transform:translateX(54px);
-      width:min(34vw, 360px);
-      height:36vh;
+      top:calc(27% + 52px + 210px);
+      transform:translateX(calc(var(--anchor-x) - 24px + var(--portrait-w) + 8px));
+      width:min(31vw, 340px);
+      height:34vh;
       z-index:12;
       pointer-events:none;
       overflow:visible;
@@ -342,30 +394,40 @@
     }
 
     @media (max-width:1100px){
-      .title-wrap{ top:26%; }
-      .title{ font-size:clamp(28px,5.6vw,58px); }
+      :root{
+        --anchor-x: 88px;
+        --portrait-w: min(18vw, 150px);
+      }
 
-      .rocket-stage{
-        width:min(36vw, 280px);
-        top:calc(26% + 42px);
-        transform:translateX(44px);
+      .title-wrap{
+        top:25%;
+        width:96vw;
+      }
+
+      .title{
+        font-size:clamp(32px, 6vw, 74px);
       }
 
       .x-beam{
-        transform:translateX(92px);
-        height:240px;
+        height:230px;
+      }
+
+      .hero-group{
+        top:calc(25% + 46px);
+        gap:16px;
+      }
+
+      .rocket-stage{
+        width:min(28vw, 220px);
       }
 
       .launch-glow{
-        top:calc(26% + 42px + 280px);
-        width:min(42vw, 300px);
-        transform:translateX(44px);
+        top:calc(25% + 46px + 240px);
       }
 
       .exhaust-field{
-        top:calc(26% + 42px + 220px);
-        width:min(42vw, 300px);
-        transform:translateX(44px);
+        top:calc(25% + 46px + 180px);
+        width:min(38vw, 290px);
       }
     }
   </style>
@@ -379,15 +441,21 @@
     <div class="x-beam"></div>
   </div>
 
-  <div class="launch-glow"></div>
-  <div class="exhaust-field" id="exhaustField"></div>
+  <div class="hero-group">
+    <div class="master-stage">
+      <img src="Konstantin-Sheremetyev.png" alt="Мастер" class="master-img">
+    </div>
 
-  <div class="rocket-stage">
-    <div class="rocket-wrap">
-      <div class="engine-flame"></div>
-      <img src="Buran.png" alt="Буран" class="rocket-img">
+    <div class="rocket-stage">
+      <div class="rocket-wrap">
+        <div class="engine-flame"></div>
+        <img src="Buran.png" alt="Буран" class="rocket-img">
+      </div>
     </div>
   </div>
+
+  <div class="launch-glow"></div>
+  <div class="exhaust-field" id="exhaustField"></div>
 
   <script>
     const scene = document.getElementById("scene");
@@ -483,11 +551,11 @@
 
     function createSparkles() {
       const colors = [
-        "rgba(255,255,255,0.95)",
-        "rgba(180,220,255,0.95)",
-        "rgba(255,230,170,0.88)",
-        "rgba(255,190,230,0.78)",
-        "rgba(170,255,245,0.78)"
+        "rgba(220,248,255,0.98)",
+        "rgba(160,230,255,0.96)",
+        "rgba(110,205,255,0.92)",
+        "rgba(120,255,255,0.84)",
+        "rgba(195,235,255,0.90)"
       ];
 
       const rect = mainX.getBoundingClientRect();
@@ -496,21 +564,31 @@
       const localX = rect.left - parentRect.left;
       const localY = rect.top - parentRect.top;
 
-      for (let i = 0; i < 22; i++) {
+      for (let i = 0; i < 26; i++) {
         const sp = document.createElement("div");
-        sp.className = "spark";
-        const size = 2 + Math.random() * 4;
-        sp.style.width = size + "px";
-        sp.style.height = size + "px";
-        sp.style.left = (localX + rect.width * (0.14 + Math.random() * 0.72)) + "px";
-        sp.style.top = (localY + rect.height * (0.10 + Math.random() * 0.76)) + "px";
+        const line = Math.random() > 0.55;
+        sp.className = "spark" + (line ? " line" : "");
+
+        if (!line) {
+          const size = 2 + Math.random() * 4;
+          sp.style.width = size + "px";
+          sp.style.height = size + "px";
+        } else {
+          sp.style.width = (1.5 + Math.random() * 2) + "px";
+          sp.style.height = (10 + Math.random() * 18) + "px";
+        }
+
         const c = colors[Math.floor(Math.random() * colors.length)];
         sp.style.background = c;
-        sp.style.boxShadow = `0 0 ${4 + Math.random() * 10}px ${c}`;
-        sp.style.setProperty("--dx", ((Math.random() - 0.5) * 32) + "px");
-        sp.style.setProperty("--dy", ((Math.random() - 0.5) * 22) + "px");
-        sp.style.animationDuration = (1 + Math.random() * 1.8) + "s";
-        sp.style.animationDelay = (Math.random() * 2.4) + "s";
+        sp.style.boxShadow = `0 0 ${5 + Math.random() * 12}px ${c}`;
+        sp.style.left = (localX + rect.width * (0.08 + Math.random() * 0.84)) + "px";
+        sp.style.top = (localY + rect.height * (0.06 + Math.random() * 0.84)) + "px";
+        sp.style.setProperty("--dx", ((Math.random() - 0.5) * 40) + "px");
+        sp.style.setProperty("--dy", ((Math.random() - 0.5) * 28) + "px");
+        sp.style.setProperty("--rot", ((Math.random() - 0.5) * 120) + "deg");
+        sp.style.animationDuration = (0.9 + Math.random() * 1.6) + "s";
+        sp.style.animationDelay = (Math.random() * 2.2) + "s";
+
         sparkleLayer.appendChild(sp);
       }
     }
