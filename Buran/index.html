@@ -7,8 +7,8 @@
   <style>
     :root{
       --bg:#000;
-      --star:#f4f8ff;
-      --text:rgba(236,241,250,.95);
+      --star:#f5f8ff;
+      --text:rgba(232,238,248,.92);
     }
 
     *{box-sizing:border-box}
@@ -48,17 +48,16 @@
       will-change:transform,opacity;
     }
 
-    /* Формулы — того же цвета, что и звезды */
     .formula{
       position:absolute;
-      color:rgba(244,248,255,.30);
+      color:rgba(245,248,255,.28);
       font-family:"Times New Roman", Georgia, serif;
       white-space:nowrap;
       user-select:none;
       pointer-events:none;
       text-shadow:
-        0 0 4px rgba(255,255,255,.05),
-        0 0 10px rgba(255,255,255,.06);
+        0 0 4px rgba(255,255,255,.04),
+        0 0 10px rgba(180,210,255,.05);
       mix-blend-mode:screen;
       animation:twinkle linear infinite;
       will-change:transform,opacity;
@@ -66,15 +65,13 @@
 
     @keyframes twinkle{
       0%,100%{opacity:.08;transform:scale(.96)}
-      50%{opacity:.96;transform:scale(1.05)}
+      50%{opacity:.95;transform:scale(1.05)}
     }
 
-    /* Надпись почти на всю длину экрана */
     .title-wrap{
       position:absolute;
       left:50%;
-      top:29%;
-      width:min(92vw, 1500px);
+      top:28%;
       transform:translate(-50%,-50%);
       z-index:20;
       text-align:center;
@@ -82,40 +79,34 @@
     }
 
     .title{
-      width:100%;
       font-weight:300;
-      font-size:clamp(40px,6.4vw,112px);
-      letter-spacing:.10em;
+      font-size:clamp(34px,4.2vw,78px);
+      letter-spacing:.08em;
       color:var(--text);
       text-shadow:
         0 0 10px rgba(190,215,255,.08),
         0 0 24px rgba(140,175,255,.06);
       position:relative;
-      display:block;
-      white-space:nowrap;
+      display:inline-block;
     }
 
-    /* Жирная, сверкающая Х */
     .title .x{
       position:relative;
       display:inline-block;
-      font-weight:700;
-      color:#ffffff;
+      color:#fbfdff;
       text-shadow:
-        0 0 8px rgba(255,255,255,.98),
-        0 0 16px rgba(220,235,255,.95),
-        0 0 26px rgba(180,220,255,.90),
-        0 0 42px rgba(140,190,255,.72),
-        0 0 74px rgba(110,170,255,.32);
-      animation:xPulse 2.1s ease-in-out infinite;
+        0 0 8px rgba(255,255,255,.96),
+        0 0 18px rgba(180,220,255,.82),
+        0 0 38px rgba(110,170,255,.56),
+        0 0 78px rgba(110,170,255,.24);
+      animation:xPulse 2.2s ease-in-out infinite;
     }
 
     @keyframes xPulse{
-      0%,100%{opacity:.92;transform:scale(1)}
-      50%{opacity:1;transform:scale(1.02)}
+      0%,100%{opacity:.9}
+      50%{opacity:1}
     }
 
-    /* Разноцветные искры вокруг Х */
     .sparkle-layer{
       position:absolute;
       inset:0;
@@ -125,27 +116,19 @@
 
     .spark{
       position:absolute;
-      width:4px;
-      height:4px;
+      width:3px;
+      height:3px;
       border-radius:50%;
       opacity:0;
-      filter:blur(.15px);
+      filter:blur(.2px);
       animation:sparkle linear infinite;
       mix-blend-mode:screen;
-    }
-
-    .spark.line{
-      width:2px;
-      height:16px;
-      border-radius:999px;
-      filter:blur(.2px);
-      transform-origin:center;
     }
 
     @keyframes sparkle{
       0%{
         opacity:0;
-        transform:translate(0,0) scale(.35) rotate(0deg);
+        transform:translate(0,0) scale(.4) rotate(0deg);
       }
       18%{
         opacity:1;
@@ -155,7 +138,7 @@
       }
       100%{
         opacity:0;
-        transform:translate(var(--dx),var(--dy)) scale(1.6) rotate(var(--rot));
+        transform:translate(var(--dx),var(--dy)) scale(1.6) rotate(40deg);
       }
     }
 
@@ -163,13 +146,13 @@
       position:absolute;
       left:50%;
       top:calc(100% + 6px);
-      transform:translateX(236px);
-      width:16px;
+      transform:translateX(128px);
+      width:14px;
       height:300px;
       background:
         linear-gradient(to bottom,
-          rgba(235,245,255,.95) 0%,
-          rgba(160,210,255,.54) 12%,
+          rgba(235,245,255,.94) 0%,
+          rgba(160,210,255,.48) 12%,
           rgba(120,180,255,.16) 40%,
           rgba(70,120,255,.05) 74%,
           rgba(0,0,0,0) 100%);
@@ -185,12 +168,12 @@
       position:absolute;
       left:50%;
       top:0;
-      width:54px;
+      width:48px;
       height:100%;
       transform:translateX(-50%);
       background:
         linear-gradient(to bottom,
-          rgba(180,220,255,.18),
+          rgba(180,220,255,.16),
           rgba(90,140,255,.05),
           rgba(0,0,0,0));
       filter:blur(16px);
@@ -199,21 +182,21 @@
     @keyframes beamPulse{
       0%,100%{
         opacity:.5;
-        transform:translateX(236px) scaleY(.96);
+        transform:translateX(128px) scaleY(.96);
       }
       50%{
         opacity:.88;
-        transform:translateX(236px) scaleY(1.03);
+        transform:translateX(128px) scaleY(1.03);
       }
     }
 
-    /* Большой Буран под Х */
+    /* БОЛЬШАЯ ракета под Х */
     .rocket-stage{
       position:absolute;
       left:50%;
-      top:calc(29% + 56px);
-      width:min(31vw, 390px);
-      transform:translateX(132px);
+      top:calc(28% + 46px);
+      width:min(28vw, 320px);
+      transform:translateX(54px);
       z-index:30;
       pointer-events:none;
     }
@@ -282,9 +265,9 @@
     .launch-glow{
       position:absolute;
       left:50%;
-      top:calc(29% + 56px + 390px);
-      transform:translateX(132px);
-      width:min(34vw, 420px);
+      top:calc(28% + 46px + 320px);
+      transform:translateX(54px);
+      width:min(32vw, 340px);
       height:20vh;
       background:
         radial-gradient(circle at 50% 20%,
@@ -298,16 +281,16 @@
     }
 
     @keyframes launchPulse{
-      0%,100%{opacity:.58;transform:translateX(132px) scale(.98)}
-      50%{opacity:1;transform:translateX(132px) scale(1.05)}
+      0%,100%{opacity:.58;transform:translateX(54px) scale(.98)}
+      50%{opacity:1;transform:translateX(54px) scale(1.05)}
     }
 
     .exhaust-field{
       position:absolute;
       left:50%;
-      top:calc(29% + 56px + 305px);
-      transform:translateX(132px);
-      width:min(36vw, 430px);
+      top:calc(28% + 46px + 250px);
+      transform:translateX(54px);
+      width:min(34vw, 360px);
       height:36vh;
       z-index:12;
       pointer-events:none;
@@ -359,37 +342,30 @@
     }
 
     @media (max-width:1100px){
-      .title-wrap{
-        top:26%;
-        width:96vw;
-      }
-
-      .title{
-        font-size:clamp(28px,6.6vw,72px);
-        letter-spacing:.08em;
-      }
+      .title-wrap{ top:26%; }
+      .title{ font-size:clamp(28px,5.6vw,58px); }
 
       .rocket-stage{
-        width:min(40vw, 320px);
-        top:calc(26% + 48px);
-        transform:translateX(96px);
+        width:min(36vw, 280px);
+        top:calc(26% + 42px);
+        transform:translateX(44px);
       }
 
       .x-beam{
-        transform:translateX(168px);
+        transform:translateX(92px);
         height:240px;
       }
 
       .launch-glow{
-        top:calc(26% + 48px + 320px);
-        width:min(44vw, 330px);
-        transform:translateX(96px);
+        top:calc(26% + 42px + 280px);
+        width:min(42vw, 300px);
+        transform:translateX(44px);
       }
 
       .exhaust-field{
-        top:calc(26% + 48px + 250px);
-        width:min(46vw, 340px);
-        transform:translateX(96px);
+        top:calc(26% + 42px + 220px);
+        width:min(42vw, 300px);
+        transform:translateX(44px);
       }
     }
   </style>
@@ -420,7 +396,7 @@
     const mainX = document.getElementById("mainX");
 
     function createStars() {
-      const count = 120;
+      const count = 115;
       for (let i = 0; i < count; i++) {
         const s = document.createElement("div");
         s.className = "star";
@@ -507,42 +483,34 @@
 
     function createSparkles() {
       const colors = [
-        "rgba(255,255,255,0.98)",
-        "rgba(180,220,255,0.96)",
-        "rgba(255,233,170,0.92)",
-        "rgba(255,190,235,0.84)",
-        "rgba(170,255,245,0.84)"
+        "rgba(255,255,255,0.95)",
+        "rgba(180,220,255,0.95)",
+        "rgba(255,230,170,0.88)",
+        "rgba(255,190,230,0.78)",
+        "rgba(170,255,245,0.78)"
       ];
 
       const rect = mainX.getBoundingClientRect();
       const parentRect = mainX.parentElement.getBoundingClientRect();
+
       const localX = rect.left - parentRect.left;
       const localY = rect.top - parentRect.top;
 
-      for (let i = 0; i < 30; i++) {
+      for (let i = 0; i < 22; i++) {
         const sp = document.createElement("div");
-        const line = Math.random() > 0.55;
-        sp.className = "spark" + (line ? " line" : "");
+        sp.className = "spark";
+        const size = 2 + Math.random() * 4;
+        sp.style.width = size + "px";
+        sp.style.height = size + "px";
+        sp.style.left = (localX + rect.width * (0.14 + Math.random() * 0.72)) + "px";
+        sp.style.top = (localY + rect.height * (0.10 + Math.random() * 0.76)) + "px";
         const c = colors[Math.floor(Math.random() * colors.length)];
-
-        if (!line) {
-          const size = 2 + Math.random() * 4;
-          sp.style.width = size + "px";
-          sp.style.height = size + "px";
-        } else {
-          sp.style.width = (1.5 + Math.random() * 2) + "px";
-          sp.style.height = (10 + Math.random() * 18) + "px";
-        }
-
-        sp.style.left = (localX + rect.width * (0.06 + Math.random() * 0.88)) + "px";
-        sp.style.top = (localY + rect.height * (0.05 + Math.random() * 0.9)) + "px";
         sp.style.background = c;
-        sp.style.boxShadow = `0 0 ${5 + Math.random() * 12}px ${c}`;
-        sp.style.setProperty("--dx", ((Math.random() - 0.5) * 42) + "px");
-        sp.style.setProperty("--dy", ((Math.random() - 0.5) * 30) + "px");
-        sp.style.setProperty("--rot", ((Math.random() - 0.5) * 120) + "deg");
-        sp.style.animationDuration = (0.9 + Math.random() * 1.6) + "s";
-        sp.style.animationDelay = (Math.random() * 2.2) + "s";
+        sp.style.boxShadow = `0 0 ${4 + Math.random() * 10}px ${c}`;
+        sp.style.setProperty("--dx", ((Math.random() - 0.5) * 32) + "px");
+        sp.style.setProperty("--dy", ((Math.random() - 0.5) * 22) + "px");
+        sp.style.animationDuration = (1 + Math.random() * 1.8) + "s";
+        sp.style.animationDelay = (Math.random() * 2.4) + "s";
         sparkleLayer.appendChild(sp);
       }
     }
